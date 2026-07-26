@@ -20,6 +20,17 @@ This is a didactic project. Every feature is an excuse to learn a concept proper
 | CI/CD | GitHub Actions |
 | Hosting | Render (API + Redis), Neon (Postgres), Cloudflare Pages (SPA) — later migrated to a VPS with Kamal |
 
+## Quick start
+
+```bash
+docker compose up -d           # Postgres + Redis (host ports 5433 / 6380)
+cd backend
+cp .env.sample .env
+bundle install
+bin/rails db:prepare
+bin/rails server               # http://localhost:3000/health
+```
+
 ## Documentation
 
 Start at [`docs/README.md`](docs/README.md). The docs cover the product vision, architecture, domain model, phased roadmap, learning guide, and contribution workflow.
