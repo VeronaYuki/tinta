@@ -1,24 +1,25 @@
-# README
+# Tinta — Backend
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Rails API for Tinta. See the project docs at [`../docs/`](../docs/README.md).
 
-Things you may want to cover:
+## Requirements
 
-* Ruby version
+- Ruby 3.3 (see `.ruby-version`)
+- PostgreSQL (local install or Docker Compose — task 0.3)
 
-* System dependencies
+## Setup
 
-* Configuration
+```bash
+bundle install
+bin/rails db:prepare   # creates tinta_development / tinta_test
+bin/rails server       # http://localhost:3000
+```
 
-* Database creation
+## Health checks
 
-* Database initialization
+- `GET /up` — Rails' built-in liveness probe: 200 if the process booted.
+- `GET /health` — deep check: verifies the database (and Redis, from task 0.3), returns 503 with per-dependency detail when something is down.
 
-* How to run the test suite
+## Tests & lint
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+RSpec and RuboCop arrive in task 0.4; CI in task 0.5.
