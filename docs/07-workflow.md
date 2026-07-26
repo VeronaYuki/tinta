@@ -58,7 +58,8 @@ On request, Claude plants one deliberate, subtle flaw in a 📖 PR and says so u
 ## PR rules
 
 1. **Small.** Target ≤ ~300 changed lines of production code (tests and docs don't count). If a task grows, split it.
-2. **One concern per PR.** A PR does one thing its title can state without "and".
+2. **Generated code ships alone.** Generator/scaffold output (`rails new`, `create-vue`, lockfiles, `schema.rb`) goes in its **own PR**, untouched, with the command and every flag documented — the flags are the review surface, not the output. Hand-written code stacks on top in a separate PR that stays within the size limit. (Rule born in PR #1 → #2/#3.)
+3. **One concern per PR.** A PR does one thing its title can state without "and".
 3. **Template** — every PR description contains:
 
 ```markdown
