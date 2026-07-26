@@ -108,6 +108,7 @@
 
 | # | PR | Teaches |
 |---|---|---|
+| 6.0 | Staging environment (promotion-style, **not** a staging branch): a second Render service auto-deploys `main` against a **Neon database branch**; production becomes a manual promote of a build that already ran on staging | Environment parity, config/secrets per env, promotion deploys, testing migrations against a prod-like DB |
 | 6.1 | SkinScore mock bureau: a tiny Sinatra/Rack app in `skinscore/` (deployed as a second free Render service) — deterministic scores by CPF, artificial latency and error rates | Building an API from the consumer's perspective |
 | 6.2 | `adapters/skin_score/`: Faraday client with timeouts, retries, error classes; WebMock/VCR specs | Resilient HTTP clients |
 | 6.3 | `CreditCheck` model with 30-day cache-by-table + `PaymentPlans::RunCreditCheck` service | Caching with TTL, idempotency |

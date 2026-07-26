@@ -147,7 +147,7 @@ frontend/
 | Uptime | UptimeRobot free | 5-min checks against `/health` |
 | CI/CD | GitHub Actions | Free for public repos |
 
-**Environments:** `development` (local) and `production` only. No staging — at this scale, a staging env would teach less than it costs. Local dev uses Docker Compose for Postgres + Redis (mirrors the "infra as containers" approach production shops use).
+**Environments:** `development` (local) and `production` through Phase 5 — early on, a staging env would teach less than it costs. Two mitigations cover the gap: Docker Compose gives local/prod parity, and **Cloudflare Pages preview deployments** give every PR branch a live frontend URL for free. A real **staging environment** arrives as task 6.0, right before the financing work raises the stakes: promotion-style (trunk-based), *not* a staging branch — `main` auto-deploys to a second Render service against a Neon database branch, and production becomes a manual promote. Local dev uses Docker Compose for Postgres + Redis (mirrors the "infra as containers" approach production shops use).
 
 **Deploys:** push to `main` → GitHub Actions runs the full test suite → on green, Render auto-deploys the backend (with `rails db:migrate` release step) and Cloudflare Pages builds the frontend. Migrations must always be backward-compatible with the running code (strong_migrations helps enforce the discipline).
 
