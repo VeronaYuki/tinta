@@ -30,6 +30,11 @@ group :development, :test do
   # Load local connection settings from .env (see .env.sample)
   gem "dotenv-rails"
 
+  # Testing framework and test-data tooling
+  gem "rspec-rails", "~> 8.0"
+  gem "factory_bot_rails", "~> 6.4"
+  gem "faker", "~> 3.5"
+
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
 
@@ -41,4 +46,12 @@ group :development, :test do
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
+end
+
+group :test do
+  # Readable one-liner matchers for model validations and associations
+  gem "shoulda-matchers", "~> 6.4"
+
+  # Coverage report, written to coverage/index.html
+  gem "simplecov", require: false
 end

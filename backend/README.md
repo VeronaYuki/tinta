@@ -29,15 +29,38 @@ curl localhost:3000/health
 # {"status":"ok","checks":{"database":true,"redis":true},...}
 ```
 
+## Tests
+
+RSpec, with FactoryBot + Faker for test data and shoulda-matchers for model
+matchers. The containers must be running: the health spec talks to real
+Postgres and Redis.
+
+```bash
+bin/rspec                              # whole suite
+bin/rspec spec/requests/health_spec.rb # one file
+bin/rspec spec/requests/health_spec.rb:12  # one example, by line number
+bin/rspec --seed 1234                  # reproduce a specific random order
+```
+
+Coverage is written to `coverage/index.html` after every run (git-ignored).
+
+Specs live in `spec/`, mirroring `app/`: `spec/requests/` for endpoint tests,
+`spec/models/`, `spec/services/`, and so on. `spec/support/**/*.rb` is loaded
+automatically for shared helpers and matchers.
+
+## Everything CI runs
+
+```bash
+bin/ci    # setup, RuboCop, RSpec, bundler-audit, Brakeman
+```
+
+Task 0.5 runs this exact command on GitHub Actions.
+
 ## Useful commands
 
 ```bash
 bin/rails console      # Ruby REPL with the app loaded
 bin/rails dbconsole    # psql session against the development database
 bin/rails routes       # every route, with its controller#action
-bin/rubocop            # linter
+bin/rubocop -a         # linter, autocorrecting what it safely can
 ```
-
-## Tests & lint
-
-RSpec arrives in task 0.4; CI in task 0.5.
