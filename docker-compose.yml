@@ -1,0 +1,52 @@
+# Local development infrastructure for Tinta.
+#
+# The Rails app and the Vue app run natively on your machine (fast reloads);
+# only the stateful services live in containers. Production parity comes from
+# using the same major versions we deploy: Postgres 17 (Neon) and Redis 7.
+#
+#   docker compose up -d      start Postgres + Redis in the background
+#   docker compose ps         see status and health
+#   docker compose logs -f    follow logs
+#   docker compose down       stop (data survives in named volumes)
+#   docker compose down -v    stop AND delete the data volumes
+#
+# Host ports are deliberately shifted (5433/6380 instead of 5432/6379) so this
+# stack can run alongside other Postgres/Redis instances already on the machine.
+name: tinta
+
+services:
+  postgres:
+    image: postgres:17-alpine
+    container_name: tinta_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: tinta
+      POSTGRES_PASSWORD: tinta
+      POSTGRES_DB: tinta_development
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U tinta -d tinta_development"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    container_name: tinta_redis
+    restart: unless-stopped
+    ports:
+      - "6380:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  postgres_data:
+  redis_data:
