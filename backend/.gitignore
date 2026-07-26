@@ -21,3 +21,6 @@
 
 # Never commit the key that decrypts config/credentials.yml.enc.
 /config/master.key
+
+# Coverage reports
+/coverage/
